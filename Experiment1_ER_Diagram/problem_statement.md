@@ -49,16 +49,17 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 
 
 ### Assumptions
-Each member has a unique Member ID (M_ID).
-A member can enroll in multiple programs, but each enrollment is recorded separately.
-Each program is assigned to one trainer at a time.
-A trainer can conduct multiple sessions.
-A session is conducted by only one trainer.
-A member can book multiple sessions.
-Every payment is made by only one member.
-Each payment has a unique Payment ID (P_ID).
-Every member has one address, which consists of Street, City, and Pincode.
-Attendance is recorded for members attending sessions.
+
+1.Each member has a unique Member ID (M_ID).
+2.A member can enroll in multiple programs, but each enrollment is recorded separately.
+3.Each program is assigned to one trainer at a time.
+4.A trainer can conduct multiple sessions.
+5.A session is conducted by only one trainer.
+6.A member can book multiple sessions.
+7.Every payment is made by only one member.
+8.Each payment has a unique Payment ID (P_ID).
+9.Every member has one address, which consists of Street, City, and Pincode.
+10.Attendance is recorded for members attending sessions.
 ---
 
 # Scenario B: City Library Event & Book Lending System
@@ -132,32 +133,47 @@ A popular restaurant wants to manage reservations, orders, and billing.
 - Waiters assigned to serve reservations.
 
 ### ER Diagram:
-*Paste or attach your diagram here*  
-![ER Diagram](er_diagram_restaurant.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/73a55eb4-ca4e-44a7-9664-87a0d1eac87b" />
+
 
 ### Entities and Attributes
 
-| Entity | Attributes (PK, FK) | Notes |
-|--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+| **Entity**      | **Attributes (PK, FK)**                                                                             | **Notes**                                                          |
+| --------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| **Customer**    | **Customer_ID (PK)**, Name, Phone, Email                                                            | Stores customer details.                                           |
+| **Reservation** | **Reservation_ID (PK)**, **Customer_ID (FK)**, Table_No, Date, Time, No_of_Guests, Reservation_Type | Stores reservation or walk-in details.                             |
+| **Waiter**      | **Waiter_ID (PK)**, Name, Phone                                                                     | Stores waiter information.                                         |
+| **Order**       | **Order_ID (PK)**, **Reservation_ID (FK)**, Order_Time, Order_Status                                | Stores orders placed under a reservation.                          |
+| **Order_Item**  | **Order_ID (FK)**, **Dish_ID (FK)** *(Composite PK)*, Quantity, Unit_Price, Subtotal                | Stores individual dishes in an order.                              |
+| **Dish**        | **Dish_ID (PK)**, Dish_Name, Price, **Category_ID (FK)**                                            | Stores menu items offered by the restaurant.                       |
+| **Category**    | **Category_ID (PK)**, Category_Name                                                                 | Stores dish categories such as Starter, Main Course, Dessert, etc. |
+| **Bill**        | **Bill_ID (PK)**, **Reservation_ID (FK)**, Bill_Date, Food_Total, Service_Charge, Total_Amount      | Stores billing information for each reservation.                   |
+
 
 ### Relationships and Constraints
 
-| Relationship | Cardinality | Participation | Notes |
-|--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+| **Relationship** | **Entities Involved**  | **Description**                              |
+| ---------------- | ---------------------- | -------------------------------------------- |
+| **Makes**        | Customer ↔ Reservation | A customer makes one or more reservations.   |
+| **Assigned_To**  | Reservation ↔ Waiter   | A waiter is assigned to serve a reservation. |
+| **Places**       | Reservation ↔ Order    | A reservation can place one or more orders.  |
+| **Contains**     | Order ↔ Order_Item     | An order contains multiple ordered dishes.   |
+| **Belongs_To**   | Dish ↔ Order_Item      | Each order item refers to one dish.          |
+| **Has**          | Category ↔ Dish        | A category contains multiple dishes.         |
+| **Generates**    | Reservation ↔ Bill     | Each reservation generates one bill.         |
+
 
 ### Assumptions
-- 
-- 
-- 
-
+Each customer has a unique Customer_ID.
+A customer can make multiple reservations, but each reservation belongs to only one customer.
+Reservations may be Reserved or Walk-in.
+Each reservation is assigned to one waiter, while a waiter can handle multiple reservations.
+A reservation can place one or more orders.
+Each order contains one or more dishes through the Order_Item entity.
+A dish belongs to only one category, but a category can contain many dishes.
+Each reservation generates only one bill after all orders are completed.
+The bill total is calculated as Food Total + Service Charge.
+The Order_Item entity uses a composite primary key (Order_ID, Dish_ID) to uniquely identify each dish within an order.
 ---
 
 ## Instructions for Students

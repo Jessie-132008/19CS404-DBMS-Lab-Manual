@@ -1,4 +1,4 @@
-<img width="1477" height="798" alt="image" src="https://github.com/user-attachments/assets/0c11b616-12c8-48a0-90e9-4ee5d543fa6a" /># Experiment 3: DML Commands
+# Experiment 3: DML Commands
 
 ## AIM
 To study and implement DML (Data Manipulation Language) commands.
@@ -120,7 +120,9 @@ UPDATE products SET reorder_lvl = reorder_lvl * 0.7 WHERE cost_price > 50 AND qu
 <img width="1461" height="852" alt="image" src="https://github.com/user-attachments/assets/86672581-80a7-424e-8e34-4d6acfe94eac" />
 
 
+
 **Question 3**
+---
 ---Write a SQL statement to Change the category to 'Household' where product name contains 'Detergent' in the products table.
 
 Products Table 

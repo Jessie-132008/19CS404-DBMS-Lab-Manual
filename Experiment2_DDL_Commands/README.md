@@ -1,4 +1,4 @@
-# Experiment 2: DDL Commands
+=k# Experiment 2: DDL Commands
 
 ## AIM
 To study and implement DDL commands and different types of constraints.
@@ -105,313 +105,335 @@ CREATE TABLE Table_Name (
 
 **Question 1**
 --
+Write a SQL Query  to Rename attribute "name" to "first_name"  and add mobilenumber as number ,DOB as Date,State as varchar(30) in the table Companies. 
 
- Write a SQL statement to Increase the salary by 500 and email as 'updated' for employees with job ID 'SA_REP' and commission percentage greater than 0.15
+For example:
 
-Employees table
+Test	Result
+pragma table_info('Companies');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          int         0                       0
+1           first_name  varchar(50  0                       0
+2           address     text        0                       0
+3           email       varchar(50  0                       0
+4           phone       varchar(10  0                       0
+5           mobilenumb  number      0                       0
+6           DOB         Date        0                       0
+7           State       varchar(30  0              
 
----------------
-employee_id
-first_name
-last_name
-email
-phone_number
-hire_date
-job_id
-salary
-commission_pct
-manager_id
-department_id
 
 ```sql
-UPDATE employees
-SET salary =salary+500,
-email='updated' WHERE JOB_ID ='SA_REP' AND commission_pct>0.15;
+ALTER TABLE Companies
+RENAME COLUMN name TO first_name;
+
+ALTER TABLE Companies
+ADD COLUMN mobilenumb number;
+
+ALTER TABLE Companies
+ADD COLUMN DOB Date;
+
+ALTER TABLE Companies
+ADD COLUMN State varchar(30);
 ```
 
 **Output:**
 
-<img width="1217" height="603" alt="image" src="https://github.com/user-attachments/assets/4ae6416a-0f69-4b53-aa18-3c3ad0b62c4d" />
+<img width="1516" height="766" alt="image" src="https://github.com/user-attachments/assets/e9032319-37af-4bf5-a940-377991f8c06a" />
+
 
 
 **Question 2**
 ---
-Write a SQL query to reduce the reorder level by 30% where cost price is more than 50 and quantity in stock is less than 100 in the products table.
+Create a table named Events with the following columns:
 
-Products Table 
-
-name          type       
-----------    ---------- 
-product_id     INT PRIMARY KEY        
-product_name   VARCHAR(10) 
-category       VARCHAR(50) 
-cost_price     DECIMAL(10) 
-sell_price     DECIMAL(10) 
-reorder_lvl    INT        
-quantity       INT        
-supplier_id    INT               
+EventID as INTEGER
+EventName as TEXT
+EventDate as DATE
 For example:
 
 Test	Result
---pragma table_info('products');
-select changes();
-changes()
-----------
-2
+pragma table_info('Events');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           EventID     INTEGER     0                       0
+1           EventName   TEXT        0                       0
+2           EventDate   DATE        0                       0
+
 
 
 ```sql
-UPDATE products SET reorder_lvl = reorder_lvl * 0.7 WHERE cost_price > 50 AND quantity < 100;
+CREATE TABLE Events (
+      EventID INTEGER,
+      EventName TEXT,
+      EventDate DATE
+      
+);
 ```
 
 **Output:**
 
-<img width="1461" height="852" alt="image" src="https://github.com/user-attachments/assets/d3d50c56-53bf-4b6a-9b93-fd960bc2471a" />
+<img width="1532" height="753" alt="image" src="https://github.com/user-attachments/assets/56c1dedf-cba5-475c-8a54-551d294601c2" />
+
 
 
 **Question 3**
 ---
-Write a SQL statement to Change the category to 'Household' where product name contains 'Detergent' in the products table.
+Insert all students from Archived_students table into the Student_details table.
 
-Products Table 
-
-name          type       
-----------    ---------- 
-product_id     INT PRIMARY KEY        
-product_name   VARCHAR(10) 
-category       VARCHAR(50) 
-cost_price     DECIMAL(10) 
-sell_price     DECIMAL(10) 
-reorder_lvl    INT        
-quantity       INT        
-supplier_id    INT           
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           RollNo      INT           0                       1
+1           Name        VARCHAR(100)  0                       0
+2           Gender      VARCHAR(10)   0                       0
+3           Subject     VARCHAR(50)   0                       0
+4           MARKS       INT           0                       0
 For example:
 
 Test	Result
-select changes();
-changes()
-----------
-4
+select * from student_details;
+RollNo      Name           Gender      Subject     MARKS
+----------  -------------  ----------  ----------  ----------
+1           Alice Johnson  Female      Math        85
+2           Bob Smith      Male        Science     90
+3           Charlie Brown  Male        English     78
 
 
 ```sql
-UPDATE products SET category ='Household' WHERE product_name LIKE '%Detergent%';
+INSERT INTO Student_Details
+SELECT * FROM Archived_students;
 ```
 
 **Output:**
 
-<img width="1446" height="840" alt="image" src="https://github.com/user-attachments/assets/c165ae41-23f6-4d93-8390-471dc68b6cf0" />
+<img width="1561" height="743" alt="image" src="https://github.com/user-attachments/assets/0bd74557-5f72-4792-8c95-07eb0956eb10" />
+
 
 
 **Question 4**
 ---
-Decrease the reorder level by 30 percent where the product name contains 'cream' and quantity in stock is higher than reorder level in the products table.
-
-PRODUCTS TABLE
-
-name               type
------------------  ---------------
-product_id         INT
-product_name       VARCHAR(100)
-category           VARCHAR(50)
-cost_price         DECIMAL(10,2)
-sell_price         DECIMAL(10,2)
-reorder_lvl        INT
-quantity           INT
-supplier_id        INT
- 
-
+Create a table named Bonuses with the following constraints:
+BonusID as INTEGER should be the primary key.
+EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID).
+BonusAmount as REAL should be greater than 0.
+BonusDate as DATE.
+Reason as TEXT should not be NULL.
 For example:
 
 Test	Result
-select changes();
-changes()
-----------
-3
+INSERT INTO Bonuses (BonusID, EmployeeID, BonusAmount, BonusDate, Reason) VALUES (1, 6, 1000.0, '2024-08-01', 'Outstanding performance');
+SELECT * FROM Bonuses;
 
 
 ```sql
-UPDATE products SET reorder_lvl = reorder_lvl * 0.70 WHERE product_name LIKE '%cream%' AND quantity > reorder_lvl;
+CREATE TABLE Bonuses (
+    BonusID INTEGER PRIMARY KEY,
+    EmployeeID INTEGER,
+    BonusAmount REAL CHECK
+(BonusAmount > 0),
+    BonusDate DATE,
+    Reason TEXT NOT NULL,
+    FOREIGN KEY (EmployeeID)
+References Employees(EmployeeID)
+);
 ```
 
 **Output:**
 
-<img width="1480" height="855" alt="image" src="https://github.com/user-attachments/assets/09fd43c5-305a-4edb-8f49-fe8355c624d0" />
+<img width="1521" height="711" alt="image" src="https://github.com/user-attachments/assets/4e2c98b4-203e-4c95-84d1-f56d506c4352" />
+
 
 
 **Question 5**
 ---
-Write a SQL statement to Increase quantity of all products by 10% to adjust for surplus stock counted
+Write a SQL query to add birth_date attribute as timestamp (datatype) in the table customer 
 
-Products table
+Sample table: customer
 
----------------
-product_id
-product_name
-category
-cost_price
-sell_price
-reorder_lvl
-quantity
-supplier_id
+ customer_id |   cust_name    |    city    | grade | salesman_id 
+-------------+----------------+------------+-------+-------------
+        3002 | Nick Rimando   | New York   |   100 |        5001
+        3007 | Brad Davis     | New York   |   200 |        5001
+        3005 | Graham Zusi    | California |   200 |        5002
+ 
+
+For example:
+
+Test	Result
+pragma table_info('customer');
+cid         name         type                               notnull     dflt_value  pk
+----------  -----------  ---------------------------------  ----------  ----------  ----------
+0           customer_id  integer primarykey auto increment  0                       0
+1           cust_name    varchar2(30)                       0                       0
+2           city         varchar(30)                        0                       0
+3           grade        number                             0                       0
+4           salesman_id  number                             0                       0
+5           birth_date   timestamp            
 
 ```sql
-UPDATE products SET quantity = quantity *1.10;
+ALTER TABLE customer ADD birth_date timestamp;
 ```
 
 **Output:**
 
-<img width="1477" height="798" alt="image" src="https://github.com/user-attachments/assets/8355fb91-1bad-400c-94f0-363ebe7e17fd" />
+<img width="1472" height="817" alt="image" src="https://github.com/user-attachments/assets/a536642a-a5b5-48a1-a8e3-c9d2d2013a1d" />
+
 
 
 **Question 6**
 ---
-Write a SQL query to Delete customers from 'customer' table where 'GRADE' is not equal to 3.
-
- 
-Sample table: Customer
-
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+  
-|CUST_CODE  | CUST_NAME   | CUST_CITY   | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT |OUTSTANDING_AMT| PHONE_NO     | AGENT_CODE |
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+
-| C00013    | Holmes      | London      | London       | UK           |     2 |     6000.00 |     5000.00 |     7000.00 |       4000.00 | BBBBBBB      | A003       |
-| C00001    | Micheal     | New York    | New York     | USA          |     2 |     3000.00 |     5000.00 |     2000.00 |       6000.00 | CCCCCCC      | A008       |
-| C00020    | Albert      | New York    | New York     | USA          |     3 |     5000.00 |     7000.00 |     6000.00 |       6000.00 | BBBBSBB      | A008       |
+Create a table named Invoices with the following constraints:
+InvoiceID as INTEGER should be the primary key.
+InvoiceDate as DATE.
+Amount as REAL should be greater than 0.
+DueDate as DATE should be greater than the InvoiceDate.
+OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
 For example:
 
 Test	Result
-select distinct(grade)from customer;
-GRADE
-----------
-2
-3
-1
-0
-GRADE
-----------
-3
+INSERT INTO Orders (OrderID, OrderDate, CustomerID) VALUES (1, '2024-08-01', 1);
+INSERT INTO Invoices (InvoiceID, InvoiceDate, Amount, DueDate, OrderID) VALUES (1, '2024-08-01', 100.0, '2024-09-01', 1);
+SELECT * FROM Invoices;
+InvoiceID   InvoiceDate  Amount      DueDate     OrderID
+----------  -----------  ----------  ----------  ----------
+1           2024-08-01   100.0       2024-09-01  1
 
 
 ```sql
-DELETE FROM customer WHERE GRADE <> 3;
+CREATE TABLE Invoices(
+  InvoiceID INTEGER PRIMARY KEY,
+  InvoiceDate DATE,
+  Amount REAL CHECK (Amount>0),
+  DueDate DATE CHECK (DueDate > InvoiceDate),
+  OrderID INTEGER,
+  FOREIGN KEY (OrderID) REFERENCES Orders
+);
 ```
 
 **Output:**
 
-<img width="1482" height="875" alt="image" src="https://github.com/user-attachments/assets/eb0cd8ca-a508-4858-bbc7-d037a695c04a" />
+<img width="1493" height="682" alt="image" src="https://github.com/user-attachments/assets/cbcf9ab7-affb-409f-9ccc-1e3d0d50fa00" />
+
 
 
 **Question 7**
 ---
-Write a SQL query to Delete a Specific Surgery whose ID is 3
-
-Sample table: Surgeries
-
-attributes: surgery_id, patient_id, surgeon_id, surgery_date
+Create a table named Orders with the following constraints:
+OrderID as INTEGER should be the primary key.
+OrderDate as DATE should be not NULL.
+CustomerID as INTEGER should be a foreign key referencing Customers(CustomerID).
 For example:
 
 Test	Result
-SELECT * FROM surgeries;
-surgery_id  patient_id  surgeon_id  surgery_date
-----------  ----------  ----------  ------------
-1           1           1           2024-01-15
-2           2           2           2024-02-28
-3           3           3           2024-03-25
-surgery_id  patient_id  surgeon_id  surgery_date
-----------  ----------  ----------  ------------
-1           1           1           2024-01-15
-2           2           2           2024-02-28
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email) VALUES (1, 'Alice', 'Johnson', 'alice.johnson@example.com');
+INSERT INTO Orders (OrderID, OrderDate, CustomerID) VALUES (1, '2024-08-01', 1);
+select * from orders;
 
 
 ```sql
-DELETE FROM surgeries WHERE surgery_id = 3;
+CREATE TABLE Orders (
+  OrderID INTEGER PRIMARY KEY,
+  OrderDate DATE NOT NULL,
+  CustomerID INTEGER,
+  FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
 ```
 
 **Output:**
 
-<img width="1487" height="790" alt="image" src="https://github.com/user-attachments/assets/c59b6213-00de-44c4-9918-cf3a1e76878f" />
+<img width="1467" height="673" alt="image" src="https://github.com/user-attachments/assets/564b752a-2876-4181-91fa-7f3e4ae2353f" />
+
 
 
 **Question 8**
 ---
-Write a SQL query to Delete All Doctors with a NULL Specialization
+Create a table named Invoices with the following constraints:
 
-Sample table: Doctors
-
-attributes : doctor_id, first_name, last_name, specialization
+InvoiceID as INTEGER should be the primary key.
+InvoiceDate as DATE.
+DueDate as DATE should be greater than the InvoiceDate.
+Amount as REAL should be greater than 0.
 For example:
 
 Test	Result
-SELECT * FROM doctors;
-doctor_id   first_name  last_name   specialization
-----------  ----------  ----------  --------------
-1           John        Smith       Cardiology
-2           Emily       Johnson     Orthopedics
-3           Michael     Brown       Pediatrics
-4           Febin       Jones
-doctor_id   first_name  last_name   specialization
-----------  ----------  ----------  --------------
-1           John        Smith       Cardiology
-2           Emily       Johnson     Orthopedics
-3           Michael     Brown       Pediatrics
+INSERT INTO Invoices (InvoiceID, InvoiceDate)
+VALUES (1, '2024-08-08'),(1,'2024-09-08');
+Error: UNIQUE constraint failed: Invoices.InvoiceID
 
 
 ```sql
-DELETE FROM doctors WHERE specialization IS NULL;
+CREATE TABLE Invoices (
+  InvoiceID INTEGER PRIMARY KEY,
+  InvoiceDate DATE,
+  DueDate DATE,
+  Amount REAL,
+  CHECK (DueDate > InvoiceDate),
+  CHECK (Amount > 0)
+);
 ```
 
 **Output:**
 
-<img width="1193" height="851" alt="image" src="https://github.com/user-attachments/assets/4a0ec674-e6ce-4448-995d-ba54357587bf" />
+<img width="1482" height="657" alt="image" src="https://github.com/user-attachments/assets/192d5af0-2817-48cf-9acb-cacb5747bcdc" />
+
 
 
 **Question 9**
 ---
-Write a SQL query to delete a doctor from Doctors table whose Specialization is 'Pediatrics' and First name is 'Michael'.
+Insert a book with ISBN 978-1234567890, Title Data Science Essentials, Author Jane Doe, Publisher TechBooks, and Year 2024 into the Books table.
 
-Sample table: Doctors
+For example:
 
-attributes : doctor_id, first_name, last_name, specialization
+Test	Result
+SELECT * FROM Books;
+ISBN            Title                    Author      Publisher   Year
+--------------  -----------------------  ----------  ----------  ----------
+978-1234567890  Data Science Essentials  Jane Doe    TechBooks   2024
 
 ```sql
-DELETE FROM doctors WHERE specialization ='Pediatrics' AND first_name='Michael';
+INSERT INTO Books (ISBN,Title,Author,Publisher,Year) VALUES ('978-1234567890','Data Science Essentials','Jane Doe','TechBooks',2024);
 ```
 
 **Output:**
 
-<img width="1390" height="607" alt="image" src="https://github.com/user-attachments/assets/6d6ec538-d96a-4ed3-a978-8c1e38948136" />
+<img width="1481" height="617" alt="image" src="https://github.com/user-attachments/assets/6ebc9f5f-4f49-4130-a517-c3e190a01572" />
+
 
 
 **Question 10**
 ---
-Write a SQL query to Delete customers from 'customer' table where 'CUST_NAME' contains the substring 'Holmes'.
+Write a SQL Query for inserting the below values in the table Customers
 
-Sample table: Customer
+ID               NAME             AGE  ADDRESS     SALARY      
+---------------  ---------------  ---  ----------  ----------  
+1                Ramesh           32   Ahmedabad   2000
+2                Khilan           25   Delhi       1500
+3                Kaushik          23   Kota        2000
+ 
 
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+  
-|CUST_CODE  | CUST_NAME   | CUST_CITY   | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT |OUTSTANDING_AMT| PHONE_NO     | AGENT_CODE |
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+
-| C00013    | Holmes      | London      | London       | UK           |     2 |     6000.00 |     5000.00 |     7000.00 |       4000.00 | BBBBBBB      | A003       |
-| C00001    | Micheal     | New York    | New York     | USA          |     2 |     3000.00 |     5000.00 |     2000.00 |       6000.00 | CCCCCCC      | A008       |
-| C00020    | Albert      | New York    | New York     | USA          |     3 |     5000.00 |     7000.00 |     6000.00 |       6000.00 | BBBBSBB      | A008       |
 For example:
 
 Test	Result
-select changes();
-CUST_CODE   CUST_NAME   CUST_CITY   WORKING_AREA  CUST_COUNTRY  GRADE       OPENING_AMT  RECEIVE_AMT  PAYMENT_AMT  OUTSTANDING_AMT  PHONE_NO    AGENT_CODE
-----------  ----------  ----------  ------------  ------------  ----------  -----------  -----------  -----------  ---------------  ----------  ----------
-C00013      Holmes      London      London        UK            2           6000         5000         7000         4000             BBBBBBB     A003
-changes()
-----------
-1
+SELECT * FROM Customers;
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Ramesh      32          Ahmedabad   2000
+2           Khilan      25          Delhi       1500
+3           Kaushik     23          Kota        2000
 
 ```sql
-DELETE FROM customer WHERE CUST_NAME LIKE '%Holmes%';
+INSERT INTO Customers(ID,NAME,AGE,ADDRESS,SALARY) VALUES (1,'Ramesh',32,'Ahmedabad',2000);
+INSERT INTO Customers(ID,NAME,AGE,ADDRESS,SALARY) VALUES (2,'Khilan',25,'Delhi',1500);
+INSERT INTO Customers(ID,NAME,AGE,ADDRESS,SALARY) VALUES (3,'Kaushik',23,'Kota',2000);
+
+
 ```
 
 **Output:**
 
-<img width="1470" height="852" alt="image" src="https://github.com/user-attachments/assets/dce8cb12-2ee0-4c4c-bda4-b1c4a087bdc7" />
+<img width="1467" height="736" alt="image" src="https://github.com/user-attachments/assets/6fd05602-e027-4588-ad6f-245657f7d4fa" />
+
+
 
 **Grade Page:**
 
